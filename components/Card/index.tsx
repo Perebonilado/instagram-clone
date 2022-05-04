@@ -1,11 +1,15 @@
 import styles from './styles.module.css'
-import { joinString } from '../../utils/Helpers'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import useLike from '../../hooks/useLike'
 import { AppContext, AppTypes } from '../../context/AppContext'
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../firebase'
+import { TextArea } from '../Input'
+import Button from  '../Button'
+import useComment from '../../hooks/useComment'
+import Loader from '../Loader'
+import useFetchComments from '../../hooks/useFetchComments'
 
 
 interface Props {
@@ -14,7 +18,7 @@ interface Props {
     likes: number,
     userName: string,
     caption: string,
-    commentsNumber: number,
+    commentCount: number,
     id: any,
     postedBy: string
 }
@@ -23,16 +27,20 @@ const Card: React.FC<Props> = ({
     postImage,
     likes,
     caption,
-    commentsNumber,
+    commentCount,
     id,
     postedBy
 }) => {
     
     const { currentUser, token } = React.useContext(AppContext) as AppTypes
     const { likePost, unlikePost } = useLike()
+    const { comments, fetchComments } = useFetchComments()
     const [ isLiked, setIsLiked ] = useState<boolean>(false)
     const [ username, setUsername ] = useState<string>('')
     const [ displayPic, setDisplayPic ] = useState<string>('')
+    const [ comment, setComment ] = useState<string>('')
+
+    const sendComment = useComment()
     
     const handleLike =  () => {
         setIsLiked(true)
@@ -77,11 +85,25 @@ const Card: React.FC<Props> = ({
 
     }
 
+
     useEffect(()=>{
         
-        if(postedBy) getUsernamePic()
+        if(postedBy) {
+            getUsernamePic()
+        }
 
     },[postedBy])
+
+    //fetch comments once theres an id
+    useEffect(()=>{
+        
+        if(id) {
+            fetchComments(id)
+        }
+    
+    },[id])
+
+    console.log(comments)
 
 
     return (
@@ -122,8 +144,26 @@ const Card: React.FC<Props> = ({
             </p>
 
             <div className={styles.comments}>
-                <p>View all {commentsNumber} comments</p>
-                {/* comments */}
+                {commentCount > 1 && <p>View all {commentCount} comments</p>}
+                {commentCount === 1 && <p>View {commentCount} comment</p>}
+                {commentCount === 0 && <p>No comments</p>}
+                
+               {comments?.map((comment:any)=>{
+                   return <p key={comment.id} style={{marginTop: '1rem'}}><b>{comment.userData.username}</b> {comment.comment}</p>
+               })}
+            </div>
+
+            <div className={styles.sendCommentBox}>
+            <TextArea placeholder='Add a comment' value={comment} onChange={(e)=>setComment(e.target.value)}/>
+            {!sendComment.loading && <Button text='Post' buttonType='link' onClick={()=>{
+
+                if(comment.trim() && currentUser && id){
+                    sendComment.sendComment(id, comment, currentUser?.email)
+                    setComment('')
+                }
+
+            }}/>}
+            {sendComment.loading && <Loader size='sm'/>}
             </div>
         </div>
     )

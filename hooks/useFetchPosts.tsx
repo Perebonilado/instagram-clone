@@ -1,6 +1,5 @@
-import { collection, getDocs, getDoc, doc, onSnapshot, query, orderBy, where } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { AppContext, AppTypes } from "../context/AppContext";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useState } from "react";
 import { db } from '../firebase'
 
 const useFetchPosts = () => {

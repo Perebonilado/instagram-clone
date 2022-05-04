@@ -61,6 +61,7 @@
 
 .comments {
     width: fit-content;
+    margin-bottom: 1rem;
 }
 
 .caption {
@@ -73,4 +74,34 @@
 
 .likeIcon {
     color: red;
+}
+
+.sendCommentBox {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.sendCommentBox textarea {
+    resize: none;
+    width: 100%;
+    outline: none;
+    border: none;
+    border-top: 1px solid lightgray;
+    padding: .5rem .8rem;
+    padding-right: 2.7rem;
+}
+
+.sendCommentBox textarea::-webkit-scrollbar {
+    display: none;
+}
+
+.sendCommentBox textarea::placeholder{
+    font-size: 18px;
+}
+
+
+.sendCommentBox button {
+    position: absolute;
+    right: .5rem;
 }

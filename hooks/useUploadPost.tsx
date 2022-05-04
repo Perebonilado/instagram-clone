@@ -1,9 +1,8 @@
 import { uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import React, { useState, useEffect } from 'react'
-import { collection, addDoc, serverTimestamp, setDoc, doc } from "firebase/firestore"; 
+import React, { useState } from 'react'
+import { collection, serverTimestamp, setDoc, doc } from "firebase/firestore"; 
 import { db } from "../firebase";
 import { AppContext, AppTypes } from "../context/AppContext";
-import { joinString } from "../utils/Helpers";
 
 const useUploadPost = () => {
 
@@ -52,6 +51,7 @@ const useUploadPost = () => {
                 likes: 0,
                 timestamp: serverTimestamp(),
                 postedBy: token?.email,
+                commentCount: 0
             }
             setDoc(newDocRef, data).then(()=>{
             

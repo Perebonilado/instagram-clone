@@ -12,7 +12,7 @@ const Container:React.FC<Props> = ({posts}) => {
     <section className={styles.container}>
         {posts.map((item:any, index:any)=>{
         
-        const { id, displayPicture, imageUrl, likes, username, caption, postedBy } = item
+        const { id, displayPicture, imageUrl, likes, username, caption, postedBy, commentCount } = item
         
         return (
           <Card 
@@ -23,7 +23,7 @@ const Container:React.FC<Props> = ({posts}) => {
           userName={username}
           caption={caption}
           postedBy={postedBy}
-          commentsNumber={0}
+          commentCount={commentCount}
           key={id}/>
         )
       })}
