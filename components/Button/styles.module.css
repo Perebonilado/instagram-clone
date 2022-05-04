@@ -1,0 +1,26 @@
+.button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.solid { 
+    padding: .5rem 2rem;
+    border-radius: .5rem;
+    background-color: rgb(20, 137, 209);
+    color: #fff;
+}
+
+.link {
+    color: rgb(20, 137, 209);
+    background: none;
+}
+
+.outline {
+    background-color: #fff;
+    border: 1px solid gray;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    font-weight: bold;
+}
+

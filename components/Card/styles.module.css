@@ -1,0 +1,76 @@
+
+.container {
+    width: 600px;
+    margin-bottom: 2rem;
+    border: 1px solid lightgray;
+    background-color: #fff;
+}
+
+.container a {
+    cursor: pointer;
+}
+
+.container header {
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+}
+
+.container header div:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.userImage {
+    width: 50px;
+    height: auto;
+    border-radius: 50%;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.postImage {
+    width: 600px;
+    height: auto;
+}
+
+.userName {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.icons {
+    padding: 1rem ;
+}
+
+.likes, .comments, .caption {
+    padding: .3rem 1rem;
+    cursor: pointer;
+}
+
+.icons i {
+    transform: scale(1.5);
+    margin-right: 2rem;
+    cursor: pointer;
+}
+
+.likes {
+    font-weight: bold;
+    width: fit-content;
+}
+
+.comments {
+    width: fit-content;
+}
+
+.caption {
+    width: fit-content;
+}
+
+.ellipsis  {
+    cursor: pointer;
+}
+
+.likeIcon {
+    color: red;
+}

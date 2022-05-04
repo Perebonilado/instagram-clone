@@ -1,0 +1,22 @@
+.modal {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.705);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.closeIcon {
+    transform: scale(3);
+    color: #fff;
+    position: fixed;
+    top: 3rem;
+    right: 5rem;
+    cursor: pointer;
+}

@@ -1,0 +1,86 @@
+
+.container {
+    background-color: #fff;
+    min-height: 50vh;
+    padding: 2rem 0;
+    border-radius: 1rem;
+    padding-top: .5rem;
+    /* width: 40rem; */
+    position: relative;
+    animation-name: scaleSize;
+    animation-duration: .3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.progressBar {
+    border: 1px solid rgb(26, 151, 230);
+    position: absolute;
+    top: 2.3rem;
+    left: 0;
+    transition: width .4s ease-in;
+}
+
+.uploadedImage {
+    width: 12rem;
+    height: auto;
+    display: inline;
+}
+
+@keyframes scaleSize {
+    from { transform: scale(1.7);}
+    to { transform: scale(1);}
+}
+
+.container h4 {
+    border-bottom: 1px solid lightgray;
+    text-align: center;
+    padding-bottom: .5rem;
+}
+
+.container>div p {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.container input[type='file'] {
+    display: none;
+}
+
+.buttonBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+
+
+.uploadContentBox {
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.captionBox {
+    overflow: hidden;
+    animation: slideOpen;
+    animation-duration: 1.8s;
+    margin-left: 1rem;
+}
+
+
+@keyframes slideOpen {
+    from {max-width: 0px; }
+    to { max-width: 1000px;}
+}
+
+.captionBox textarea {
+    resize: none;
+    height: 100%;
+    width: 13rem;
+    outline: none;
+    padding: .5rem;
+}

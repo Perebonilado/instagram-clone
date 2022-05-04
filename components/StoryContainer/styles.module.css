@@ -1,0 +1,41 @@
+.container {
+    overflow: hidden;
+    width: 600px;
+    margin: 2rem auto;
+    border: 1px solid lightgray;
+    padding: 1rem;
+    position: relative;
+    background-color: #fff;
+}
+
+.sliderButton {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid rgb(230, 230, 230);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.151);
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.sliderRightButton {
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sliderLeftButton {
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.slider {
+    display: flex;
+    transition: transform .5s ease-in-out;
+}

@@ -1,0 +1,28 @@
+.loader {
+    border: 5px solid rgb(233, 233, 233);
+    border-radius: 50%;
+    border-top-color: rgb(26, 151, 230);
+    animation: spin 700ms linear infinite;
+  }
+  
+  .md {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .sm {
+    border-width: 2px;
+    width: 15px;
+    height: 15px;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+  
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  

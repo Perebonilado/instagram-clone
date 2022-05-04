@@ -1,0 +1,44 @@
+.container {
+    display: flex;
+    padding: 3rem 0;
+}
+
+.profilePicBox img {
+    width: 150px;
+    height: 150px;
+    min-height: 150px;
+    min-width: 150px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    border-width: 5px;
+    outline: 1px solid gray;
+}
+
+.infoBox {
+    padding-left: 5rem;
+}
+
+.infoBox > div:first-child, .infoBox>div:nth-child(2) {
+    display: flex;
+    padding-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.infoBox > div:first-child p, .infoBox>div:nth-child(2) p {
+    margin-right: 1.5rem;
+}
+
+.infoBox > div:first-child p {
+    font-size: 20px;
+}
+
+.infoBox>div:last-child p {
+    margin-top: .5rem;
+}
+
+.website {
+    color: rgb(92, 20, 160);
+    font-weight: bold;
+    cursor: pointer;
+}
