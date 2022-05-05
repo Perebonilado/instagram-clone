@@ -10,6 +10,10 @@ import Button from  '../Button'
 import useComment from '../../hooks/useComment'
 import Loader from '../Loader'
 import useFetchComments from '../../hooks/useFetchComments'
+import useUnfollow from '../../hooks/useUnfollow'
+import HoverCard from '../HoverCard'
+import useFetchPosts from '../../hooks/useFetchPosts'
+import useCheckFollowing from '../../hooks/useCheckFollowing'
 
 
 interface Props {
@@ -33,14 +37,24 @@ const Card: React.FC<Props> = ({
 }) => {
     
     const { currentUser, token } = React.useContext(AppContext) as AppTypes
-    const { likePost, unlikePost } = useLike()
-    const { comments, fetchComments } = useFetchComments()
     const [ isLiked, setIsLiked ] = useState<boolean>(false)
     const [ username, setUsername ] = useState<string>('')
     const [ displayPic, setDisplayPic ] = useState<string>('')
     const [ comment, setComment ] = useState<string>('')
-
+    const [ isHovering, setIsHovering ] = useState<boolean>(false)
+    const [ followingCount, setFollowingCount ] = useState<any>(null)
+    const [ followerCount, setFollowerCount ] = useState<any>(null)
+    const [ postCount, setPostCount ] = useState<any>(null)
+    const [ hoveredUser, setHoveredUser ] = useState<any>(null)
+    const [ postsSnippet, setPostsSnippet ] = useState<any>(null)
+    
+    const { setIsFollowing, checkFollowing, isFollowing } = useCheckFollowing()
+    const { likePost, unlikePost } = useLike()
     const sendComment = useComment()
+    const { commentSnippets, fetchCommentSnippets } = useFetchComments()
+    const { unfollow } = useUnfollow()
+    const limitedPosts = useFetchPosts()
+
     
     const handleLike =  () => {
         setIsLiked(true)
@@ -81,11 +95,34 @@ const Card: React.FC<Props> = ({
         if(docSnap.exists()) {
             setUsername(docSnap.data().username)
             setDisplayPic(docSnap.data().displayPicture)
+            setFollowerCount(docSnap.data().followerCount)
+            setFollowingCount(docSnap.data().followingCount)
+            setPostCount(docSnap.data().postCount)
+            setHoveredUser(docSnap.data())
         }
 
     }
 
+    // fetch 3 posts of the hovered user only when we hover 
+    // and if we already havent fetched
+    useEffect(()=>{
 
+        if(isHovering && hoveredUser && !postsSnippet){
+            setPostsSnippet(limitedPosts.getLimitedPosts(hoveredUser?.email))
+        }
+
+        // check if we are following this user
+        if(currentUser && hoveredUser) {
+            if(isHovering && currentUser?.email !== hoveredUser?.email){
+                checkFollowing(currentUser, hoveredUser)
+            }
+
+        }
+        
+    },[hoveredUser, isHovering])
+
+
+    // get the current cards user name and display picture
     useEffect(()=>{
         
         if(postedBy) {
@@ -98,18 +135,20 @@ const Card: React.FC<Props> = ({
     useEffect(()=>{
         
         if(id) {
-            fetchComments(id)
+            fetchCommentSnippets(id)
         }
     
     },[id])
 
-    console.log(comments)
-
 
     return (
-        <div className={styles.container} id={id}>
+        <div 
+        className={styles.container} 
+        id={id}
+        onMouseLeave={()=>setIsHovering(false)}
+        >
             <header>
-                <div>
+                <div onMouseEnter={()=>setIsHovering(true)}>
                         
                     <Link href={`/${username}`} passHref>
                     <img src={displayPic} alt="user image" className={styles.userImage} referrerPolicy='no-referrer'/>
@@ -126,6 +165,7 @@ const Card: React.FC<Props> = ({
                 </div>
             </header>
 
+            <div onMouseEnter={()=>setIsHovering(false)}>
             <img src={postImage} alt="post image" className={styles.postImage}/>
 
             <div className={styles.icons}>
@@ -140,22 +180,31 @@ const Card: React.FC<Props> = ({
             </div>
 
             <p className={styles.caption}>
-                <b>{username}</b> {caption}
+                <Link href={`/${username}`} passHref>
+                <b>{username} </b>
+                </Link>
+                 {caption}
             </p>
 
             <div className={styles.comments}>
-                {commentCount > 1 && <p>View all {commentCount} comments</p>}
-                {commentCount === 1 && <p>View {commentCount} comment</p>}
+                {commentCount > 1 && <p style={{cursor: 'pointer'}}>View all {commentCount} comments</p>}
+                {commentCount === 1 && <p style={{cursor: 'pointer'}}>View {commentCount} comment</p>}
                 {commentCount === 0 && <p>No comments</p>}
                 
-               {comments?.map((comment:any)=>{
-                   return <p key={comment.id} style={{marginTop: '1rem'}}><b>{comment.userData.username}</b> {comment.comment}</p>
+               {commentSnippets?.map((comment:any)=>{
+                  
+                   return <p key={comment.id} style={{marginTop: '1rem'}}>
+                       <Link href={`/${comment.userData.username}`} passHref>
+                           <b>{comment.userData.username} </b>
+                        </Link>
+                        {comment.comment}</p>
                })}
             </div>
 
             <div className={styles.sendCommentBox}>
-            <TextArea placeholder='Add a comment' value={comment} onChange={(e)=>setComment(e.target.value)}/>
-            {!sendComment.loading && <Button text='Post' buttonType='link' onClick={()=>{
+            <TextArea 
+            placeholder='Add a comment' value={comment} onChange={(e)=>setComment(e.target.value)}/>
+            {!sendComment.loading && <Button style={{color:`${!comment ? 'lightgray' : ''}`}} text='Post' buttonType='link' onClick={()=>{
 
                 if(comment.trim() && currentUser && id){
                     sendComment.sendComment(id, comment, currentUser?.email)
@@ -165,6 +214,26 @@ const Card: React.FC<Props> = ({
             }}/>}
             {sendComment.loading && <Loader size='sm'/>}
             </div>
+            </div>
+
+            <div className={styles.hoverCard} onMouseLeave={()=>setIsHovering(false)}>
+            {isHovering && 
+            
+            <HoverCard 
+            username={username}
+            displayPicture={displayPic}
+            followerCount={followerCount}
+            followingCount={followingCount}
+            postCount={postCount}
+            currentUser={token?.email}
+            hoveredUser={hoveredUser?.email}
+            posts={limitedPosts?.posts}
+            handleUnfollow={()=>unfollow(currentUser, hoveredUser, setIsFollowing)}
+            isFollowing={isFollowing}
+            />
+            }
+            </div>
+
         </div>
     )
 }

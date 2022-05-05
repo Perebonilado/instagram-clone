@@ -4,32 +4,42 @@ import { db } from "../firebase";
 
 const useFetchComments = () => {
 
-    const [ comments, setComments ] = useState<any>(null)
-    const boostedComments:{}[] = [] //an array of the comments after fetching each users data
+    const [ commentSnippets, setCommentSnippets ] = useState<any>(null)
     
     // function to fetch just two comments to display on each post
-    const fetchComments = async (id:any) => {
-        const commentsArray:any[] = [] //an array of the pure comments
+    const fetchCommentSnippets =  async (id:any) => {
         
-        // fetch the comments for each post
-        const q = query(collection(db, 'posts', id, 'comments'), limit(2))
-        const querySnapshot = await getDocs(q)
-        querySnapshot.forEach(async(docSnap)=>{
-            let newItem:any = {id: docSnap.id, ...docSnap.data()}
-            if(newItem.senderID){
-                let userData = await getDoc(doc(db, 'users', newItem.senderID));
-                if(userData.exists()){
-                    newItem.userData = userData.data()
-                }
+            const commentsArray:any = [] //an array of the pure comments
+
+            // fetch the comments for each post
+            const q = query(collection(db, 'posts', id, 'comments'), limit(2))
+            const querySnapshot = await getDocs(q)
+
+            querySnapshot.forEach((docSnap)=>{
+                let newItem:any = {id: docSnap.id, ...docSnap.data()}
                 commentsArray.push(newItem)
+            })
+
+            // initialize a new array to push comments with users
+            let commentsWithUsersArr:any = []
+
+            if(commentsArray.length){
+                for (let i = 0; i < commentsArray.length; i++) {
+                    // for each comment, fetch the user, mutate the data and push into commentsWithUsersArr
+                    let userDataAdded = await getDoc(doc(db, 'users', commentsArray[i].senderID))
+                    if(userDataAdded.exists()){
+                        commentsWithUsersArr.push({...commentsArray[i], userData: userDataAdded.data()})
+                    }
+                    
+                }
             }
-            
-            setComments(commentsArray)
-        })
+
+            setCommentSnippets(commentsWithUsersArr)
+
     }
     
 
-    return { comments, fetchComments }
+    return { commentSnippets, fetchCommentSnippets, }
 
 }
 

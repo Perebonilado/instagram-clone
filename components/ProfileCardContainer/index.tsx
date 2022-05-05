@@ -9,12 +9,12 @@ const ProfileCardContainer: React.FC<Props> = ({ posts }) => {
     return (
         <section className={styles.container}>
             {posts.map((post:any)=>{
-                const { imageUrl, likes, id} = post
+                const { imageUrl, likes, id, commentCount} = post
                 return (
                     <ProfileCard 
                     key={id} 
                     likes={likes} 
-                    commentsNumber={0} 
+                    commentsNumber={commentCount} 
                     imageUrl={imageUrl}/>
                 )
             })}

@@ -1,6 +1,6 @@
 import { uploadBytes, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import React, { useState } from 'react'
-import { collection, serverTimestamp, setDoc, doc } from "firebase/firestore"; 
+import { collection, serverTimestamp, setDoc, doc, updateDoc, increment } from "firebase/firestore"; 
 import { db } from "../firebase";
 import { AppContext, AppTypes } from "../context/AppContext";
 
@@ -54,8 +54,20 @@ const useUploadPost = () => {
                 commentCount: 0
             }
             setDoc(newDocRef, data).then(()=>{
-            
-                setLoading(false)
+                
+                // increment post count on user
+                const userRef = doc(db, 'users', token?.email)
+                updateDoc(userRef, {
+                    postCount: increment(1)
+                }).then(()=>{
+                    setLoading(false)
+
+                }).catch((err)=>{
+                    console.error(err)
+                    
+                    setLoading(false)
+                })
+
             
             })
             
