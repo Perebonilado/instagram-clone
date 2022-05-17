@@ -5,6 +5,9 @@ import UploadCard from '../UploadCard'
 import React, { useState } from 'react'
 import { AppContext, AppTypes } from '../../context/AppContext';
 import Link from 'next/link'
+import { faHome, faUpload, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useRouter } from 'next/router'
 
 interface Props {
     profilePic?: string
@@ -14,6 +17,7 @@ const Navbar: React.FC<Props> = ({ profilePic }) => {
 
     const [ isUploadCard, setIsUploadCard ] = useState<boolean>(false)
     const { setIsModal } = React.useContext(AppContext) as AppTypes
+    const router = useRouter()
 
     const handleUploadCardOpen = () => {
         setIsModal(true)
@@ -45,11 +49,11 @@ const Navbar: React.FC<Props> = ({ profilePic }) => {
             </div>
 
             <div className={styles.iconsBox}>
-                <i className='fas fa-home'/>
-                <i className='fas fa-upload' onClick={handleUploadCardOpen}/>
-                <i className='fas fa-regular fa-envelope'/>
-                <i className='fas fa-map-marker-alt'/>
-                <i className='far fa-heart'/>
+                <FontAwesomeIcon icon={faHome} className={styles.icon} onClick={()=>{
+                    router.push('/')
+                }}/>
+                <FontAwesomeIcon icon={faUpload} className={styles.icon} onClick={handleUploadCardOpen}/>
+                <FontAwesomeIcon icon={faEnvelope} className={styles.icon}/>
                 <Link href={'/Auth'} passHref>
                 <img src={profilePic || "https://res.cloudinary.com/dt0wfaxft/image/upload/v1642514040/98BD2D98-CB82-4D0F-AC85-EDAF24BC86E1_ewrujw.jpg"} alt="profile picture" className={styles.profilePic} referrerPolicy='no-referrer'/>
                 </Link>

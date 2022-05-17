@@ -34,7 +34,7 @@
     margin: 0 1.5rem;
 }
 
-.modal i {
+.modal .icon {
     margin-right: .6rem;
     transform: scale(1.2);
     cursor: pointer;

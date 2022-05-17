@@ -13,6 +13,9 @@ import { AppContext, AppTypes } from '../context/AppContext';
 import useFetchUserData from '../hooks/useFetchUserData'
 import useFetchFollowing from '../hooks/useFetchFollowing';
 
+import { faCoffee, faHeart, } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 const Home: NextPage = () => {
   

@@ -1,7 +1,7 @@
 .nav {
     display: flex;
-    /* justify-content: center; */
-    padding: 1rem 28%;
+    justify-content: center;
+    padding: 1rem 0;
     background-color: #fff;
     border-bottom: 1px solid lightgray;
 }
@@ -21,7 +21,7 @@
     padding-left: 3rem;
 }
 
-.nav div:last-child i {
+.nav div:last-child .icon {
     margin-right: 1.5rem;
     transform: scale(1.3);
     cursor: pointer;
@@ -54,3 +54,22 @@
     cursor: pointer;
 }
 
+@media only screen and (max-width: 815px) {
+
+    .search {
+        display: none;
+    }
+
+    .nav {
+        justify-content: space-around;
+    }
+    
+    .nav div:last-child {
+        padding-left: 0;
+    }
+
+    .nav h1 {
+        margin-right: 2rem;
+    }
+
+}

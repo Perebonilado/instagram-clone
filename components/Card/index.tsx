@@ -14,6 +14,8 @@ import useUnfollow from '../../hooks/useUnfollow'
 import HoverCard from '../HoverCard'
 import useFetchPosts from '../../hooks/useFetchPosts'
 import useCheckFollowing from '../../hooks/useCheckFollowing'
+import { faPaperPlane, faHeart, faComment} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 interface Props {
@@ -165,14 +167,14 @@ const Card: React.FC<Props> = ({
                 </div>
             </header>
 
-            <div onMouseEnter={()=>setIsHovering(false)}>
+            <div onMouseEnter={()=>setIsHovering(false)} className={styles.imageBox}>
             <img src={postImage} alt="post image" className={styles.postImage}/>
 
             <div className={styles.icons}>
-                {isLiked && <i className={`fas fa-heart ${styles.likeIcon}`} onClick={handleUnlike}/>}
-                {!isLiked && <i className={`far fa-heart`} onClick={handleLike}/>}
-                <i className='far fa-comment' />
-                <i className='far fa-paper-plane' />
+                {isLiked && <FontAwesomeIcon icon={faHeart} onClick={handleUnlike} className={`${styles.likeIcon} ${styles.icon}`}/>}
+                {!isLiked && <FontAwesomeIcon icon={faHeart} onClick={handleLike} className={styles.icon}/>}
+                <FontAwesomeIcon icon={faComment} className={styles.icon}/>
+                <FontAwesomeIcon icon={faPaperPlane} className={styles.icon}/>
             </div>
 
             <div className={styles.likes}>

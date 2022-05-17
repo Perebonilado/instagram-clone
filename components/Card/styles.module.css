@@ -83,6 +83,11 @@
     width: fit-content;
 }
 
+.icon {
+    margin-left: .5rem;
+    cursor: pointer;
+}
+
 .ellipsis  {
     cursor: pointer;
 }
@@ -120,3 +125,19 @@
     position: absolute;
     right: .5rem;
 }
+
+
+/* media queries */
+
+@media only screen and (max-width: 790px) { 
+    
+    .container {
+        width: 100%;
+    }
+
+    .postImage {
+        width: 100%;
+    }
+
+}
+

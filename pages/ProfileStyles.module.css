@@ -1,3 +1,19 @@
 .container {
     padding: 0 10rem;
 }
+
+@media only screen and (max-width: 1400px) {
+    
+    .container {
+        padding: 0 4rem;
+    }
+
+}
+
+@media only screen and (max-width: 1200px) {
+    
+    .container {
+        padding: 0;
+    }
+
+}

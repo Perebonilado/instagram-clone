@@ -1,4 +1,7 @@
 import styles from './styles.module.css'
+import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 interface Props {
     imageUrl: string,
     likes: number,
@@ -16,12 +19,12 @@ const ProfileCard: React.FC<Props> = ({
             <div className={styles.modal}>
 
                 <div>
-            <i className='fas fa-heart' />
+                <FontAwesomeIcon icon={faHeart} className={styles.icon}/>
                 {likes}
                 </div>
 
                 <div>
-            <i className='fas fa-comment' />
+                <FontAwesomeIcon icon={faComment} className={styles.icon}/>
                 {commentsNumber}
                 </div>
             </div>

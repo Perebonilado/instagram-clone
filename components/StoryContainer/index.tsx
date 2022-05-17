@@ -4,6 +4,9 @@ import { useState } from 'react'
 import Story from '../Story'
 import styles from './styles.module.css'
 
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 interface Props {
   posts: any
 }
@@ -22,9 +25,9 @@ const StoryContainer: React.FC<Props> = ({posts}) => {
 
   return (
     <div className={styles.container}>
-      {sliderPosition < 0 && <div className={`${styles.sliderButton} ${styles.sliderLeftButton}`} onClick={handleLeftSlide}> <i className='fas fa-solid fa-chevron-left'/> </div>}
+      {sliderPosition < 0 && <div className={`${styles.sliderButton} ${styles.sliderLeftButton}`} onClick={handleLeftSlide}> <FontAwesomeIcon icon={faChevronLeft} /> </div>}
 
-      {sliderPosition >= -120 && <div className={`${styles.sliderButton} ${styles.sliderRightButton}`} onClick={handleRightSlide}> <i className='fas fa-solid fa-chevron-right'/> </div>}
+      {sliderPosition >= -120 && <div className={`${styles.sliderButton} ${styles.sliderRightButton}`} onClick={handleRightSlide}> <FontAwesomeIcon icon={faChevronRight} /> </div>}
 
         <div className={styles.slider} style={{transform: `translateX(${sliderPosition}%)`}}>
             {posts.map((item:any, index:any)=>{

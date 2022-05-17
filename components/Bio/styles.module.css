@@ -1,6 +1,7 @@
 .container {
     display: flex;
-    padding: 3rem 0;
+    padding: 3rem .5rem;
+    position: relative;
 }
 
 .profilePicBox img {
@@ -11,7 +12,6 @@
     border-radius: 50%;
     border: 1px solid transparent;
     border-width: 5px;
-    outline: 1px solid gray;
 }
 
 .infoBox {
@@ -41,4 +41,55 @@
     color: rgb(92, 20, 160);
     font-weight: bold;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 718px) {
+    
+    .profilePicBox,.profilePicBox img{
+        width: 100px !important;
+        height: 100px !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        position: absolute;
+    }
+
+    .profilePicBox {
+        padding-left: .5rem;
+    }
+
+    .infoBox {
+        padding-left: 1rem;
+    }
+
+    .infoBox>div:first-child {
+        display: flex;
+        justify-content: flex-end;
+        padding-left: 3rem;
+    }
+
+    .infoBox>div:nth-child(2) {
+        padding: 0;
+        padding-bottom: 1rem;
+        margin-top: 4rem;
+    }
+
+    
+}
+
+@media only screen and (max-width: 480px) {
+    
+    .profilePicBox,.profilePicBox img {
+        width: 70px !important;
+        height: 70px !important;
+    }
+
+}
+
+@media only screen and (max-width: 380px) {
+    
+    .profilePicBox,.profilePicBox img {
+        width: 50px !important;
+        height: 50px !important;
+    }
+
 }
