@@ -6,12 +6,12 @@ export type AppTypes = {
     isModal: boolean;
     setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
     currentUser: any,
-    setCurrentUser: React.Dispatch<any>
+    setCurrentUser: React.Dispatch<any>;
 }
 
 export const AppContext = React.createContext<AppTypes | null>(null)
 
-export const AppProvider: React.FC = ({children}) => {
+export const AppProvider = ({children}:any) => {
 
     const [ token, setToken ] = useState<any>(null)
     const [ isModal, setIsModal ] = useState<boolean>(false)

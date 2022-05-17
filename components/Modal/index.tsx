@@ -3,7 +3,8 @@ import { AppContext, AppTypes } from '../../context/AppContext';
 import styles from './styles.module.css'
 
 interface Props {
-    handleClose?: ()=>void
+    handleClose?: ()=>void;
+    children:any
 }
 
 const Modal: React.FC<Props> = ({children, handleClose}) => {
