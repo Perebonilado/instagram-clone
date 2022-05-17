@@ -2,12 +2,14 @@ import styles from './styles.module.css'
 import { TextInput } from '../Input'
 import Modal from '../Modal'
 import UploadCard from '../UploadCard'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AppContext, AppTypes } from '../../context/AppContext';
 import Link from 'next/link'
 import { faHome, faUpload, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRouter } from 'next/router'
+import SearchBox from '../SearchBox'
+import useSearch from '../../hooks/useSearch'
 
 interface Props {
     profilePic?: string
@@ -16,9 +18,33 @@ interface Props {
 const Navbar: React.FC<Props> = ({ profilePic }) => {
 
     const [ isUploadCard, setIsUploadCard ] = useState<boolean>(false)
+    const [ searching, setSearching ] = useState<boolean>(false)
+    const [ searchVal, setSearchVal ] = useState<string>('')
     const { setIsModal } = React.useContext(AppContext) as AppTypes
     const router = useRouter()
 
+    const { 
+        search, 
+        loading, data: 
+        searchResults,
+        setData: setSearchResults 
+     } = useSearch()
+
+
+    // handles displaying of search modal
+    useEffect(()=>{
+        
+        if(searchVal.trim() && !searching){
+            setSearching(true)
+        }
+        if(!searchVal) {
+            setSearching(false)
+            setSearchResults(null)
+        }
+
+    },[searchVal])
+
+        
     const handleUploadCardOpen = () => {
         setIsModal(true)
         setIsUploadCard(true)
@@ -28,6 +54,13 @@ const Navbar: React.FC<Props> = ({ profilePic }) => {
         setIsModal(false)
         setIsUploadCard(false)
     }
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.code === 'Enter' || e.keyCode === 13){
+            if(searchVal)search(searchVal)
+        }
+    }
+
 
     return (
         <>
@@ -44,7 +77,17 @@ const Navbar: React.FC<Props> = ({ profilePic }) => {
 
                 <div className={styles.searchBox}>
                 <i className='fas fa-search'/>
-                <TextInput className={styles.search} placeholder='Search'/>
+                <TextInput
+                value={searchVal}
+                onChange={(e)=>setSearchVal(e.target.value.trimStart())} 
+                onKeyDown={(e)=>handleKeyPress(e)}
+                className={styles.search} 
+                placeholder='Search'/>
+                
+                <div className={styles.searchBoxContainer}>
+                    {searching && <SearchBox result={searchResults} setSearching={setSearching}/>}
+                </div>
+
                 </div>
             </div>
 

@@ -34,7 +34,7 @@
     border: none;
     background-color: rgb(231, 229, 229);
     padding: .5rem 0;
-    padding-left: 2.5rem;
+    padding-left: .5rem;
 }
 
 .searchBox {
@@ -47,6 +47,13 @@
     transform: scale(1) !important;
 }
 
+.searchBoxContainer {
+    position: absolute;
+    left: 0;
+    top: 3rem;
+    z-index: 4;
+}
+
 .profilePic {
     width: 30px;
     height: 30px;
@@ -57,7 +64,23 @@
 @media only screen and (max-width: 815px) {
 
     .search {
-        display: none;
+        /* display: none; */
+        width: 100%;
+        margin: 0;
+        margin-right: .3rem;
+    }
+
+    .iconsBox {
+        margin-top: 2rem;
+        justify-content: center;
+    }
+
+    .logoSearchBox {
+        justify-content: center;
+    }
+
+    .nav {
+        flex-direction: column;
     }
 
     .nav {

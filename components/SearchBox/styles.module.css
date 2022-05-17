@@ -1,0 +1,29 @@
+.container {
+    width: 100%;
+    min-height: 3rem;
+    background-color: #fff;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.205);
+    border-radius: .5rem;
+    border: 1px solid lightgray;
+    padding: 1rem;
+}
+
+.result {
+    display: flex;
+    align-items: center;
+    border: 1px solid lightgray;
+    cursor: pointer;
+    padding: .5rem 0;
+    border-radius: .7rem;
+}
+
+.result:hover {
+    border-color: blue;
+}
+
+.result img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: .5rem;
+}
