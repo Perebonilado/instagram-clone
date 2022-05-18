@@ -76,7 +76,6 @@ const Navbar: React.FC<Props> = ({ profilePic }) => {
                 </Link>
 
                 <div className={styles.searchBox}>
-                <i className='fas fa-search'/>
                 <TextInput
                 value={searchVal}
                 onChange={(e)=>setSearchVal(e.target.value.trimStart())} 
